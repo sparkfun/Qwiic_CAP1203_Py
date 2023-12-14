@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 #-------------------------------------------------------------------------------
-# qwiic_template_ex1_title.py TODO: replace template and title
+# qwiic_cap1203_ex6_disable_interrupt.py
 #
-# TODO: Add description for this example
+# Demonstrates how to disable interrupts from the Qwiic CAP1203
 #-------------------------------------------------------------------------------
-# Written by SparkFun Electronics, TODO: month and year
+# Written by SparkFun Electronics, December 2023
 #
 # This python library supports the SparkFun Electroncis Qwiic ecosystem
 #
@@ -33,15 +33,14 @@
 # SOFTWARE.
 #===============================================================================
 
-import qwiic_template # TODO Import correct package
+import qwiic_cap1203
 import sys
 
 def runExample():
-	# TODO Replace template and title
-	print("\nQwiic Template Example 1 - Title\n")
+	print("\nQwiic CAP1203 Example 6 - Disable Interrupt\n")
 
 	# Create instance of device
-	myDevice = qwiic_template.QwiicTemplate() # TODO update as needed
+	myDevice = qwiic_cap1203.QwiicCAP1203()
 
 	# Check if it's connected
 	if myDevice.is_connected() == False:
@@ -52,7 +51,26 @@ def runExample():
 	# Initialize the device
 	myDevice.begin()
 
-	# TODO Add basic example code
+	# Interrupt is ENABLED as default.
+	# When the interrupt pin is DISABLED, the alert LED
+	# does not turn on. When the interrupt pin is ENABLED,
+	# the alert LED turns on when a touch is detected.
+	myDevice.set_interrupt_disabled()  # Disable Interrupt
+	# myDevice.set_interrupt_enabled()   # Enable Interrupt
+
+	# Check the current status of the interrupt pin.
+	# Returns True if interrupt pin is enabled and
+	# False if disabled.
+	if myDevice.is_interrupt_enabled():
+		print("Interrupt: ENABLED")
+	else:
+		print("Interrupt: DISABLED")
+
+	while True:
+		if myDevice.is_touched():
+			print("Touch")
+			while myDevice.is_touched():
+				pass
 
 if __name__ == '__main__':
 	try:
