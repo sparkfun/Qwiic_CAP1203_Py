@@ -160,7 +160,10 @@ class QwiicCAP1203(object):
         """
 
         # Use address if provided, otherwise pick the default
-        self.address = self.available_addresses[0] if address is None else address
+        if address in self.available_addresses:
+            self.address = address
+        else:
+            self.address = self.available_addresses[0]
 
         # Load the I2C driver if one isn't provided
         if i2c_driver is None:
@@ -181,7 +184,7 @@ class QwiicCAP1203(object):
         :rtype: bool
         """
         # Check if connected by seeing if an ACK is received
-        if(not qwiic_i2c.isDeviceConnected(self.address)):
+        if(not self._i2c.isDeviceConnected(self.address)):
             return False
         
         # Something ACK'd, check if the product ID is correct
