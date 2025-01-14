@@ -209,6 +209,8 @@ class QwiicCAP1203(object):
         """!
         Control the primary power state of the device. See data sheet
         on Main Control Register (pg. 22).
+
+        @return **int** Main Control Register value
         """
         self._i2c.readByte(self.address, self.MAIN_CONTROL)
 
@@ -216,6 +218,8 @@ class QwiicCAP1203(object):
         """!
         Checks inputs in the general status register to ensure program
         is set up correctly. See data sheet on Status Registers (pg. 23).
+
+        @return **int** General Status Register value
         """
         self._i2c.readByte(self.address, self.GENERAL_STATUS)
 
@@ -254,6 +258,8 @@ class QwiicCAP1203(object):
         (0x07), otherwise returns false. When the interrupts are enabled, the 
         LED on the CAP1203 Touch Slider Board turns on when it detects a touch 
         (pg. 33).
+
+        @return **bool** `True` if enabled, otherwise `False`
         """
         reg = self._i2c.readByte(self.address, self.INTERRUPT_ENABLE)
         if (reg & 0x07) == 0x07:
@@ -281,6 +287,8 @@ class QwiicCAP1203(object):
         """!
         Returns the sensitivity multiplier for current sensitivity settings
         (pg. 25).
+
+        @return **int** Sensitivity multiplier
         """
         reg = self._i2c.readByte(self.address, self.SENSITIVITY_CONTROL)
         sensitivity = (reg >> 4) & 0x07
@@ -309,6 +317,8 @@ class QwiicCAP1203(object):
         Checks if touch input detected on left sensor (pad 1). Need to clear
         interrupt pin after touch occurs. See datasheet on Sensor Interrupt 
         Status Reg (pg.23).
+
+        @return **bool** `True` if left sensor is touched, otherwise `False`
         """
         reg = self._i2c.readByte(self.address, self.SENSOR_INPUT_STATUS)
 
@@ -323,6 +333,8 @@ class QwiicCAP1203(object):
         Checks if touch input detected on left sensor (pad 2). Need to clear
         interrupt pin after touch occurs. See datasheet on Sensor Interrupt 
         Status Reg (pg.23).
+
+        @return **bool** `True` if middle sensor is touched, otherwise `False`
         """
         reg = self._i2c.readByte(self.address, self.SENSOR_INPUT_STATUS)
 
@@ -337,6 +349,8 @@ class QwiicCAP1203(object):
         Checks if touch input detected on left sensor (pad 3). Need to clear
         interrupt pin after touch occurs. See datasheet on Sensor Interrupt 
         Status Reg (pg.23).
+
+        @return **bool** `True` if right sensor is touched, otherwise `False`
         """
         reg = self._i2c.readByte(self.address, self.SENSOR_INPUT_STATUS)
 
@@ -351,6 +365,8 @@ class QwiicCAP1203(object):
         Checks if touch input detected on any sensor. Need to clear
         interrupt pin after touch occurs. See datasheet on Sensor Interrupt 
         Status (pg.23).
+
+        @return **bool** `True` if any sensor is touched, otherwise `False`
         """
         reg = self._i2c.readByte(self.address, self.GENERAL_STATUS)
 
@@ -365,6 +381,8 @@ class QwiicCAP1203(object):
         Checks if a right swipe occured on the board. This method
         takes up all functionality due to implementation of 
         while loop with millis().
+
+        @return **bool** `True` if right swipe occured, otherwise `False`
         """
         swipe = False  # Tracks if conditions are being met
         start_time = self.millis()
@@ -411,6 +429,8 @@ class QwiicCAP1203(object):
         Checks if a left swipe occured on the board. This method
         takes up all functionality due to implementation of 
         while loop with millis().
+
+        @return **bool** `True` if left swipe occured, otherwise `False`
         """
         swipe = False  # Tracks if conditions are being met
         start_time = self.millis()
@@ -488,6 +508,8 @@ class QwiicCAP1203(object):
             0x00        1
             0x01        2
             0x02        3
+
+        @return **int** Pad number set as power button
         """
         reg = self._i2c.readByte(self.address, self.POWER_BUTTON)
 
@@ -527,6 +549,8 @@ class QwiicCAP1203(object):
             0x01        560 MS
             0x02        1120 MS
             0x03        2240 MS
+        
+        @return **int** Time in milliseconds
         """
         reg = self._i2c.readByte(self.address, self.POWER_BUTTON_CONFIG)
         if (reg & 0x03) == self.PWR_TIME_280_MS:
@@ -563,6 +587,8 @@ class QwiicCAP1203(object):
         Returns state of power button. Returns true if enabled (reg. value is
         0x01), otherwise returns false. Power button must be ENABLED to use.
         See data sheet on Power Button Configuration Register (pg. 43-44).
+
+        @return **bool** `True` if enabled, otherwise `False`
         """
         reg = self._i2c.readByte(self.address, self.POWER_BUTTON_CONFIG)
         if reg & 0x04 == 0x04:
@@ -577,6 +603,8 @@ class QwiicCAP1203(object):
         is generated and PWR bit is set in the General Status Register. See 
         data sheet on Power Button (pg. 16), Power Button Register (pg. 43),
         and Power Button Configuration Register (pg. 43).
+
+        @return **bool** `True` if power button is touched, otherwise `False`
         """
         reg = self._i2c.readByte(self.address, self.GENERAL_STATUS)
         if reg & 0x10 == 0x10:
