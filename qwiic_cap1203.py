@@ -38,7 +38,7 @@
 # Dryw Wade
 #===============================================================================
 
-"""
+"""!
 qwiic_cap1203
 ============
 Python module for the [SparkFun Qwiic Capacitive Touch Slider](https://www.sparkfun.com/products/15344)
@@ -148,15 +148,13 @@ class QwiicCAP1203(object):
     SENSITIVITY_1X = 0x07  # Least sensitive
 
     def __init__(self, address=None, i2c_driver=None):
-        """
+        """!
         Constructor
 
-        :param address: The I2C address to use for the device
+        @param int, optional address: The I2C address to use for the device
             If not provided, the default address is used
-        :type address: int, optional
-        :param i2c_driver: An existing i2c driver object
+        @param I2CDriver, optional i2c_driver: An existing i2c driver object
             If not provided, a driver object is created
-        :type i2c_driver: I2CDriver, optional
         """
 
         # Use address if provided, otherwise pick the default
@@ -177,11 +175,10 @@ class QwiicCAP1203(object):
         # TODO: Initialize any variables used by this driver
 
     def is_connected(self):
-        """
+        """!
         Determines if this device is connected
 
-        :return: `True` if connected, otherwise `False`
-        :rtype: bool
+        @return **bool** `True` if connected, otherwise `False`
         """
         # Check if connected by seeing if an ACK is received
         if(not self._i2c.isDeviceConnected(self.address)):
@@ -194,11 +191,10 @@ class QwiicCAP1203(object):
     connected = property(is_connected)
 
     def begin(self):
-        """
+        """!
         Initializes this device with default parameters
 
-        :return: Returns `True` if successful, otherwise `False`
-        :rtype: bool
+        @return **bool** Returns `True` if successful, otherwise `False`
         """
         # Confirm device is connected before doing anything
         if not self.is_connected():
@@ -210,21 +206,21 @@ class QwiicCAP1203(object):
         return True
 
     def check_main_control(self):
-        """
+        """!
         Control the primary power state of the device. See data sheet
         on Main Control Register (pg. 22).
         """
         self._i2c.readByte(self.address, self.MAIN_CONTROL)
 
     def check_status(self):
-        """
+        """!
         Checks inputs in the general status register to ensure program
         is set up correctly. See data sheet on Status Registers (pg. 23).
         """
         self._i2c.readByte(self.address, self.GENERAL_STATUS)
 
     def clear_interrupt(self):
-        """
+        """!
         Clears the interrupt (INT) bit by writing a logic 0 to it.
         This bit must be cleared in order to detec a new capacitive
         touch input. See datasheet on Main Control Register (pg. 22).
@@ -234,7 +230,7 @@ class QwiicCAP1203(object):
         self._i2c.writeByte(self.address, self.MAIN_CONTROL, reg)
 
     def set_interrupt_disabled(self):
-        """
+        """!
         This disables all the interrupts, so the alert LED will not turn on
         when a sensor is touched. Set on default in begin function See data 
         sheet on Interrupt Enable Register (pg. 33).
@@ -244,7 +240,7 @@ class QwiicCAP1203(object):
         self._i2c.writeByte(self.address, self.INTERRUPT_ENABLE, reg)
 
     def set_interrupt_enabled(self):
-        """
+        """!
         This turns on all the interrupts, so the alert LED turns on when any 
         sensor is touched. See data sheet on Interrupt Enable Register (pg. 33).
         """
@@ -253,7 +249,7 @@ class QwiicCAP1203(object):
         self._i2c.writeByte(self.address, self.INTERRUPT_ENABLE, reg)
 
     def is_interrupt_enabled(self):
-        """
+        """!
         Returns state of intterupt pin. Returns true if all interrupts enabled 
         (0x07), otherwise returns false. When the interrupts are enabled, the 
         LED on the CAP1203 Touch Slider Board turns on when it detects a touch 
@@ -265,13 +261,12 @@ class QwiicCAP1203(object):
         return False
 
     def set_sensitivity(self, sensitivity):
-        """
+        """!
         Sensitivity calibrated for SparkFun Capacitive Touch Slider. You may 
         want to change sensitivity settings if creating your own capacitive 
         touch pads. See datasheet on Sensitivity Control Register (pg. 25).
 
-        :param sensitivity: Sensitivity multiplier
-        :type sensitivity: int
+        @param int sensitivity: Sensitivity multiplier
         """
         reg = self._i2c.readByte(self.address, self.SENSITIVITY_CONTROL)
         reg &= 0x8F
@@ -283,7 +278,7 @@ class QwiicCAP1203(object):
         self._i2c.writeByte(self.address, self.SENSITIVITY_CONTROL, reg)
 
     def get_sensitivity(self):
-        """
+        """!
         Returns the sensitivity multiplier for current sensitivity settings
         (pg. 25).
         """
@@ -310,7 +305,7 @@ class QwiicCAP1203(object):
             return 0
         
     def is_left_touched(self):
-        """
+        """!
         Checks if touch input detected on left sensor (pad 1). Need to clear
         interrupt pin after touch occurs. See datasheet on Sensor Interrupt 
         Status Reg (pg.23).
@@ -324,7 +319,7 @@ class QwiicCAP1203(object):
         return False
 
     def is_middle_touched(self):
-        """
+        """!
         Checks if touch input detected on left sensor (pad 2). Need to clear
         interrupt pin after touch occurs. See datasheet on Sensor Interrupt 
         Status Reg (pg.23).
@@ -338,7 +333,7 @@ class QwiicCAP1203(object):
         return False
 
     def is_right_touched(self):
-        """
+        """!
         Checks if touch input detected on left sensor (pad 3). Need to clear
         interrupt pin after touch occurs. See datasheet on Sensor Interrupt 
         Status Reg (pg.23).
@@ -352,7 +347,7 @@ class QwiicCAP1203(object):
         return False
 
     def is_touched(self):
-        """
+        """!
         Checks if touch input detected on any sensor. Need to clear
         interrupt pin after touch occurs. See datasheet on Sensor Interrupt 
         Status (pg.23).
@@ -366,7 +361,7 @@ class QwiicCAP1203(object):
         return False
 
     def is_right_swipe_pulled(self):
-        """
+        """!
         Checks if a right swipe occured on the board. This method
         takes up all functionality due to implementation of 
         while loop with millis().
@@ -412,7 +407,7 @@ class QwiicCAP1203(object):
         return False
 
     def is_left_swipe_pulled(self):
-        """
+        """!
         Checks if a left swipe occured on the board. This method
         takes up all functionality due to implementation of 
         while loop with millis().
@@ -458,14 +453,13 @@ class QwiicCAP1203(object):
         return False
 
     def set_power_button_pad(self, pad):
-        """
+        """!
         Sets a specific pad to act as a power button. Function takes in which 
         pad to set as power button. See datasheet on Power Button (pg. 16).
 
-        :param pad: Pad to be set as power button
-        :type pad: int
-        :return: `True` if successful, otherwise `False`
-        :rtype: bool
+        @param int pad: Pad to be set as power button
+
+        @return **bool** `True` if successful, otherwise `False`
         """
         reg = self._i2c.readByte(self.address, self.POWER_BUTTON)
         reg &= 0xF8
@@ -484,7 +478,7 @@ class QwiicCAP1203(object):
         return True
 
     def get_power_button_pad(self):
-        """
+        """!
         Returns which capacitive touch pad is currently set to act
         as a power button.
         
@@ -500,7 +494,7 @@ class QwiicCAP1203(object):
         return (reg & 0x07) + 1
 
     def set_power_button_time(self, input_time):
-        """
+        """!
         Configure the length of time that the designated power button
         must indicate a touch before an interrupt is generated and the
         power status indicator is set. See data sheet on Power Button
@@ -508,10 +502,9 @@ class QwiicCAP1203(object):
         
         Possible inputs (represent time in ms): 280, 560, 1120, 2240
 
-        :param input_time: Power button input time
-        :type input_time: int
-        :return: `True` if successful, otherwise `False`
-        :rtype: bool
+        @param int input_time: Power button input time
+
+        @return **bool** `True` if successful, otherwise `False`
         """
         reg = self._i2c.readByte(self.address, self.POWER_BUTTON_CONFIG)
         reg &= 0xFC
@@ -524,7 +517,7 @@ class QwiicCAP1203(object):
         return True
 
     def get_power_button_time(self):
-        """
+        """!
         Returns the length of the time designated time power button must 
         indicate a touch before an interrupt is generated. 
         
@@ -548,7 +541,7 @@ class QwiicCAP1203(object):
         return 0
 
     def set_power_button_enabled(self):
-        """
+        """!
         Enables power button in active state. See data sheet on Power Button
         Configuration Register (pg. 43-44)
         """
@@ -557,7 +550,7 @@ class QwiicCAP1203(object):
         self._i2c.writeByte(self.address, self.POWER_BUTTON_CONFIG, reg)
 
     def set_power_button_disabled(self):
-        """
+        """!
         Disables power button in active state. See data sheet on Power Button
         Configuration Register (pg. 43-44)
         """
@@ -566,7 +559,7 @@ class QwiicCAP1203(object):
         self._i2c.writeByte(self.address, self.POWER_BUTTON_CONFIG, reg)
 
     def is_power_button_enabled(self):
-        """
+        """!
         Returns state of power button. Returns true if enabled (reg. value is
         0x01), otherwise returns false. Power button must be ENABLED to use.
         See data sheet on Power Button Configuration Register (pg. 43-44).
@@ -579,7 +572,7 @@ class QwiicCAP1203(object):
         return False
 
     def is_power_button_touched(self):
-        """
+        """!
         Once the power button has been held for designated time, an interrupt 
         is generated and PWR bit is set in the General Status Register. See 
         data sheet on Power Button (pg. 16), Power Button Register (pg. 43),
@@ -592,11 +585,10 @@ class QwiicCAP1203(object):
         return False
     
     def millis(self):
-        """
+        """!
         Get the current time in milliseconds
 
-        :return: Current time in milliseconds
-        :rtype: int
+        @return **int** Current time in milliseconds
         """
         if hasattr(time, "ticks_ms"):
 	        # MicroPython: time.time() gives an integer, instead use ticks_ms()
