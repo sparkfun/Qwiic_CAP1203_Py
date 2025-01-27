@@ -1,9 +1,12 @@
 {
     "urls": [
-      ["qwiic_cap1203.py", "github:sparkfun/Qwiic_CAP1203_Py/qwiic_cap1203.py"]
-    ],
-    "deps": [
-      ["github:sparkfun/Qwiic_I2C_Py", "master"]
+      ["qwiic_cap1203_py_examples/qwiic_cap1203_ex1_basic_readings.py", "github:sparkfun/qwiic_cap1203_py/examples/qwiic_cap1203_ex1_basic_readings.py"],
+      ["qwiic_cap1203_py_examples/qwiic_cap1203_ex2_detect_any_touch.py", "github:sparkfun/qwiic_cap1203_py/examples/qwiic_cap1203_ex2_detect_any_touch.py"],
+      ["qwiic_cap1203_py_examples/qwiic_cap1203_ex3_detect_swipe.py", "github:sparkfun/qwiic_cap1203_py/examples/qwiic_cap1203_ex3_detect_swipe.py"],
+      ["qwiic_cap1203_py_examples/qwiic_cap1203_ex4_power_button.py", "github:sparkfun/qwiic_cap1203_py/examples/qwiic_cap1203_ex4_power_button.py"],
+      ["qwiic_cap1203_py_examples/qwiic_cap1203_ex5_detect_current_touch.py", "github:sparkfun/qwiic_cap1203_py/examples/qwiic_cap1203_ex5_detect_current_touch.py"],
+      ["qwiic_cap1203_py_examples/qwiic_cap1203_ex6_disable_interrupt.py", "github:sparkfun/qwiic_cap1203_py/examples/qwiic_cap1203_ex6_disable_interrupt.py"],
+      ["qwiic_cap1203_py_examples/qwiic_cap1203_ex7_set_sensitivity.py", "github:sparkfun/qwiic_cap1203_py/examples/qwiic_cap1203_ex7_set_sensitivity.py"]
     ],
     "version": "0.0.1"
 }
