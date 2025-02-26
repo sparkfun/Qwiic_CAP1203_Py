@@ -79,7 +79,7 @@ mpremote mip install github:sparkfun/qwiic_cap1203_py
 
 If you would also like to install the examples for this repository, issue the following mip command as well:
 ```sh
-mprmeote mip install github:sparkfun/qwiic_cap1203_py@examples
+mpremote mip install --target "" github:sparkfun/qwiic_cap1203_py@examples
 ```
 
 ### CircuitPython Installation
